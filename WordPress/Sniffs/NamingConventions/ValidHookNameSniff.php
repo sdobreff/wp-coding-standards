@@ -181,11 +181,12 @@ class ValidHookNameSniff extends AbstractFunctionParameterSniff {
 			trim( implode( '', $expected ) ),
 			trim( implode( '', $content ) ),
 		);
-
+		/* Temporarly removed, Check with Stoil
 		if ( $case_errors > 0 ) {
 			$error = 'Hook names should be lowercase. Expected: %s, but found: %s.';
 			$this->phpcsFile->addError( $error, $first_non_empty, 'NotLowercase', $data );
 		}
+		*/
 		if ( $underscores > 0 ) {
 			$error = 'Words in hook names should be separated using underscores. Expected: %s, but found: %s.';
 			$this->phpcsFile->addWarning( $error, $first_non_empty, 'UseUnderscores', $data );
