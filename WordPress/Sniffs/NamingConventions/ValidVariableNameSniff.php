@@ -147,6 +147,7 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 							$obj_var_name,
 							$suggested_name,
 						);
+						// Adding errors as fixable and resolve them
 						$fix = $phpcsFile->addFixableError( $error, $var, 'UsedPropertyNotSnakeCase', $data );
 						if ( $fix === true ) {
 							$replacement = str_replace( $obj_var_name, $suggested_name, $tokens[ $var ]['content'] );
@@ -179,6 +180,7 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 					$var_name,
 					$suggested_name,
 				);
+				// Adding errors as fixable and resolve them
 
 				$fix  = $phpcsFile->addFixableError( $error, $stackPtr, $error_name, $data );
 
@@ -222,6 +224,7 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 				$var_name,
 				$suggested_name,
 			);
+			// Adding errors as fixable and resolve them
 			$fix = $phpcsFile->addFixableError( $error, $stackPtr, 'PropertyNotSnakeCase', $data );
 
 			if ( $fix === true ) {
@@ -273,6 +276,7 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 						$var_name,
 						$suggested_name,
 					);
+					// Adding errors as fixable and resolve them
 					$fix = $phpcsFile->addFixableError( $error, $stackPtr, 'InterpolatedVariableNotSnakeCase', $data );
 
 					if ( $fix === true ) {
