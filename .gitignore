@@ -5,3 +5,5 @@ phpunit.xml
 phpcs.xml
 .phpcs.xml
 phpstan.neon
+WordPress/.DS_Store
+.DS_Store
