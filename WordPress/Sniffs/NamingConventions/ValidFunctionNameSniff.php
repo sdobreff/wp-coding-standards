@@ -117,7 +117,13 @@ final class ValidFunctionNameSniff extends Sniff {
 				$functionName,
 				$suggested_name,
 			);
-			$this->phpcsFile->addError( $error, $stackPtr, 'FunctionNameInvalid', $errorData );
+			// Adding errors as fixable and resolve them
+			$fix = $this->phpcsFile->addFixableError( $error, $stackPtr, 'FunctionNameInvalid', $errorData );
+
+			if ( $fix === true ) {
+				$replacement = str_replace( $functionName, $suggested_name, $this->tokens[ $stackPtr ]['content'] );
+				$this->phpcsFile->fixer->replaceToken( $stackPtr, $replacement );
+			}
 		}
 	}
 
@@ -182,7 +188,15 @@ final class ValidFunctionNameSniff extends Sniff {
 				$className,
 				$suggested_name,
 			);
-			$this->phpcsFile->addError( $error, $stackPtr, 'MethodNameInvalid', $errorData );
+
+			// Adding errors as fixable and resolve them
+			$fix = $this->phpcsFile->addFixableError( $error, $stackPtr, 'MethodNameInvalid', $errorData );
+
+			if ( $fix === true ) {
+				$replacement = str_replace( $methodName, $suggested_name, $this->tokens[ $currScope ]['content'] );
+				// \var_dump($stackPtr); die();
+				$this->phpcsFile->fixer->replaceToken( $stackPtr+2, $suggested_name );
+			}
 		}
 	}
 }

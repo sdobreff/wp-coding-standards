@@ -140,13 +140,18 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 					}
 
 					$suggested_name = SnakeCaseHelper::get_suggestion( $obj_var_name );
+
 					if ( $suggested_name !== $obj_var_name ) {
 						$error = 'Object property "$%s" is not in valid snake_case format, try "$%s"';
 						$data  = array(
 							$obj_var_name,
 							$suggested_name,
 						);
-						$phpcsFile->addError( $error, $var, 'UsedPropertyNotSnakeCase', $data );
+						$fix = $phpcsFile->addFixableError( $error, $var, 'UsedPropertyNotSnakeCase', $data );
+						if ( $fix === true ) {
+							$replacement = str_replace( $obj_var_name, $suggested_name, $tokens[ $var ]['content'] );
+							$phpcsFile->fixer->replaceToken( $var, $replacement  );
+						}
 					}
 				}
 			}
@@ -174,7 +179,13 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 					$var_name,
 					$suggested_name,
 				);
-				$phpcsFile->addError( $error, $stackPtr, $error_name, $data );
+
+				$fix  = $phpcsFile->addFixableError( $error, $stackPtr, $error_name, $data );
+
+				if ( $fix === true ) {
+					$replacement = str_replace( $var_name, $suggested_name, $tokens[ $stackPtr ]['content'] );
+					$phpcsFile->fixer->replaceToken( $stackPtr, $replacement );
+				}
 			}
 		}
 	}
@@ -211,7 +222,12 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 				$var_name,
 				$suggested_name,
 			);
-			$phpcsFile->addError( $error, $stackPtr, 'PropertyNotSnakeCase', $data );
+			$fix = $phpcsFile->addFixableError( $error, $stackPtr, 'PropertyNotSnakeCase', $data );
+
+			if ( $fix === true ) {
+				$replacement = str_replace( $var_name, $suggested_name, $tokens[ $stackPtr ]['content'] );
+				$phpcsFile->fixer->replaceToken( $stackPtr, $replacement  );
+			}
 		}
 	}
 
@@ -252,12 +268,17 @@ final class ValidVariableNameSniff extends PHPCS_AbstractVariableSniff {
 
 				$suggested_name = SnakeCaseHelper::get_suggestion( $var_name );
 				if ( $suggested_name !== $var_name ) {
-					$error = 'Variable "$%s" is not in valid snake_case format, try "$%s"';
+					$error = 'Variable "$%s" is not hghghghg in valid snake_case format, try "$%s"';
 					$data  = array(
 						$var_name,
 						$suggested_name,
 					);
-					$phpcsFile->addError( $error, $stackPtr, 'InterpolatedVariableNotSnakeCase', $data );
+					$fix = $phpcsFile->addFixableError( $error, $stackPtr, 'InterpolatedVariableNotSnakeCase', $data );
+
+					if ( $fix === true ) {
+						$replacement = str_replace( $var_name, $suggested_name, $tokens[ $stackPtr ]['content'] );
+						$phpcsFile->fixer->replaceToken( $stackPtr, $replacement );
+					}
 				}
 			}
 		}
